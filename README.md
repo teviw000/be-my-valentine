@@ -61,7 +61,7 @@ Clone the repository:
 
 ``` bash
 git clone https://github.com/teviw000/be-my-valentine.git
-cd YOUR_REPO_NAME
+cd be-my-valentine
 npm install
 npm run dev
 ```
