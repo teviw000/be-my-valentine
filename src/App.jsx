@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { use, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import valentineGif from "./assets/chopper-tony-tony-chopper.gif";
 import valentineThanks from "./assets/love-you-hamster.gif";
@@ -47,18 +47,18 @@ export default function App() {
   }, []);
 
   // Move "No" somewhere else inside arena, with a new size
-const teleportNo = () => {
-  const arena = arenaRef.current;
-  if (!arena) return;
+  const teleportNo = () => {
+    const arena = arenaRef.current;
+    if (!arena) return;
 
-  const rect = arena.getBoundingClientRect();
+    const rect = arena.getBoundingClientRect();
 
-  const sizes = [
-    { w: 90, h: 36 },
-    { w: 110, h: 44 },
-    { w: 130, h: 52 },
-    { w: 150, h: 56 },
-  ];
+    const sizes = [
+      { w: 90, h: 36 },
+      { w: 110, h: 44 },
+      { w: 130, h: 52 },
+      { w: 150, h: 56 },
+    ];
 
   const s = sizes[Math.floor(Math.random() * sizes.length)];
 
@@ -105,7 +105,25 @@ const teleportNo = () => {
 
   return (
     <div className="page">
-      <div className="card">
+      {accepted ? (
+        <div className="card">
+          <div className="title"> 
+            <img
+              src={valentineThanks}
+              alt="Thanks valentine gif"
+              className="thanks-gif"
+            />
+          </div>
+          <div className="subtitle">
+          {accepted && (
+            <button className="btn reset" onClick={() => setAccepted(false)} type="button">
+              Reset
+            </button>
+          )}
+          </div>
+        </div>
+      ) : (
+        <div className="card">
         <h1 className="title">
           {accepted ? "Yay! 💖" : "Will you be my valentines?"}
         </h1>
@@ -117,9 +135,7 @@ const teleportNo = () => {
         />
 
         <p className="subtitle">
-          {accepted
-            ? "Best decision ever. See you on Valentine’s! 🥰"
-            : "Choose wisely… 😏"}
+          Choose wisely… 😏
         </p>
 
         <div className="arena" ref={arenaRef}>
@@ -132,33 +148,27 @@ const teleportNo = () => {
           </button>
 
           <button
-  ref={noRef}
-  className="btn no"
-  type="button"
-  style={{
-    left: `${noBox.x}px`,
-    top: `${noBox.y}px`,
-    width: `${noBox.w}px`,
-    height: `${noBox.h}px`,
-  }}
-  onMouseEnter={teleportNo}
-  onPointerEnter={teleportNo}
-  onClick={(e) => {
-    e.preventDefault();
-    teleportNo();
-  }}
->
-  No
-</button>
-        </div>
-
-        {accepted && (
-          <button className="btn reset" onClick={() => setAccepted(false)} type="button">
-            Reset
+            ref={noRef}
+            className="btn no"
+            type="button"
+            style={{
+              left: `${noBox.x}px`,
+              top: `${noBox.y}px`,
+              width: `${noBox.w}px`,
+              height: `${noBox.h}px`,
+            }}
+            onMouseEnter={teleportNo}
+            onPointerEnter={teleportNo}
+            onClick={(e) => {
+              e.preventDefault();
+              teleportNo();
+            }}
+          >
+            No
           </button>
-        )}
+        </div>
       </div>
+      )}
     </div>
-
   );
 }
