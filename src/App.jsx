@@ -1,8 +1,13 @@
 import { use, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import valentineGif from "./assets/chopper-tony-tony-chopper.gif";
-import valentineThanks from "./assets/love-you-hamster.gif";
-
+import img1 from "./assets/gallery/gopro.jpeg";
+import img2 from "./assets/gallery/IMG_0109.jpeg";
+import img3 from "./assets/gallery/IMG_1881.jpeg";
+import img4 from "./assets/gallery/IMG_3026.jpeg";
+import img5 from "./assets/gallery/throwback.jpeg";
+import img6 from "./assets/gallery/IMG_8151.jpeg";
+import bgMusic from "./assets/valentine-song.mp3";
 
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
@@ -11,8 +16,46 @@ function clamp(n, min, max) {
 export default function App() {
   const arenaRef = useRef(null);
   const noRef = useRef(null);
+  const galleryImages = [ img1, img2, img3, img4, img5, img6 ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.35);
 
   const [accepted, setAccepted] = useState(false);
+
+  // music logic
+  const startMusic = async () => {
+    const a = audioRef.current;
+    if (!a) return;
+
+    try {
+      a.volume = volume;
+      await a.play();
+      setIsPlaying(true);
+    } catch (err) {
+      // Autoplay blocked until user interacts — this is normal.
+      console.log("Audio play blocked:", err);
+    }
+  };
+
+  const toggleMusic = async () => {
+    const a = audioRef.current;
+    if (!a) return;
+
+    if (a.paused) {
+      await startMusic();
+    } else {
+      a.pause();
+      setIsPlaying(false);
+    }
+  };
+
+useEffect(() => {
+  const a = audioRef.current;
+  if (a) a.volume = volume;
+}, [volume]);
 
   // Position & size for the "No" button (absolute within arena)
   const [noBox, setNoBox] = useState({ x: 0, y: 0, w: 120, h: 48 });
@@ -107,21 +150,45 @@ export default function App() {
     <div className="page">
       {accepted ? (
         <div className="card">
-          <div className="title"> 
+          <div className="gallery">
             <img
-              src={valentineThanks}
-              alt="Thanks valentine gif"
-              className="thanks-gif"
+              src={galleryImages[currentIndex]}
+              className="gallery-image"
+              alt="gallery"
             />
           </div>
-          <div className="subtitle">
-          {accepted && (
-            <button className="btn reset" onClick={() => setAccepted(false)} type="button">
-              Reset
-            </button>
-          )}
-          </div>
-        </div>
+          <div className="gallery-controls">
+              <button
+                className="arrow left"
+                onClick={() =>
+                  setCurrentIndex((prev) =>
+                    prev === 0 ? galleryImages.length - 1 : prev - 1
+                  )
+                }
+              >
+                ◀
+              </button>
+              <button
+                className="arrow right"
+                onClick={() =>
+                  setCurrentIndex((prev) =>
+                    prev === galleryImages.length - 1 ? 0 : prev + 1
+                  )
+                }
+              >
+                ▶
+              </button>
+            </div>
+          <button
+            className="reset"
+            onClick={() => {
+              setAccepted(false);
+              setCurrentIndex(0);
+            }}
+          >
+            Reset
+          </button>
+</div>
       ) : (
         <div className="card">
         <h1 className="title">

@@ -104,3 +104,48 @@ html, body, #root {
   justify-content: center;  /* horizontal */
   align-items: center;      /* vertical */
 }
+
+.gallery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+.gallery-image {
+  width: clamp(180px, 70vw, 400px); /* min, fluid, max */
+  height: auto;
+  border-radius: 20px;
+}
+
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.arrow {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;   /* perfect centering */
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 20px;
+  line-height: 1;        /* prevents vertical glyph shift */
+  cursor: pointer;
+  padding: 0;   
+}
+
+.arrow:hover {
+  transform: scale(1.2);
+}
+
+.reset {
+  display: flex;
+  justify-self: center;
+}
