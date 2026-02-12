@@ -1,9 +1,6 @@
 # Will You Be My Valentine?
 
-A playful interactive web app built with React and Vite to ask one very
-important question:
-
-> **Will you be my valentines?**
+An interactive web app built with React and Vite to ask someone to be your valentine
 
 ------------------------------------------------------------------------
 
