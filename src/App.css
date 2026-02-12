@@ -88,6 +88,11 @@ html, body, #root {
   background: rgba(0, 0, 0, 0.08);
 }
 
+.reset-controls {
+  display: flex;
+  justify-content: center;
+}
+
 .valentine-gif {
   width: 200px;      /* change this */
   max-width: 100%;

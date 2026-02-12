@@ -20,6 +20,9 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const audioRef = useRef(null);
+  const audioCtxRef = useRef(null);
+  const gainRef = useRef(null);
+  const sourceRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.35);
 
@@ -31,12 +34,33 @@ export default function App() {
     if (!a) return;
 
     try {
-      a.volume = volume;
+      await ensureAudioGraph();
       await a.play();
       setIsPlaying(true);
     } catch (err) {
-      // Autoplay blocked until user interacts — this is normal.
       console.log("Audio play blocked:", err);
+    }
+  };
+
+  const ensureAudioGraph = async () => {
+    const audioEl = audioRef.current;
+    if (!audioEl) return;
+
+    if (!audioCtxRef.current) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      audioCtxRef.current = new AudioContextClass();
+
+      gainRef.current = audioCtxRef.current.createGain();
+      gainRef.current.gain.value = volume;
+
+      sourceRef.current = audioCtxRef.current.createMediaElementSource(audioEl);
+      sourceRef.current.connect(gainRef.current);
+      gainRef.current.connect(audioCtxRef.current.destination);
+    }
+
+    // iOS requires resume() on user gesture
+    if (audioCtxRef.current.state === "suspended") {
+      await audioCtxRef.current.resume();
     }
   };
 
@@ -53,8 +77,9 @@ export default function App() {
   };
 
   useEffect(() => {
-    const a = audioRef.current;
-    if (a) a.volume = volume;
+    if (gainRef.current) {
+      gainRef.current.gain.value = volume;
+    }
   }, [volume]);
 
   // Position & size for the "No" button (absolute within arena)
@@ -192,24 +217,25 @@ export default function App() {
                 </button>
               </div>
             </div>
-          
-          <button
-            className="reset"
-            onClick={() => {
-            setAccepted(false);
-            setCurrentIndex(0);
+          <div className="reset-controls">
+            <button
+              className="reset"
+              onClick={() => {
+              setAccepted(false);
+              setCurrentIndex(0);
 
-            const a = audioRef.current;
-            if (a) {
-              a.pause();          // stop playback
-              a.currentTime = 0;  // rewind to beginning
-            }
+              const a = audioRef.current;
+              if (a) {
+                a.pause();          // stop playback
+                a.currentTime = 0;  // rewind to beginning
+              }
 
-            setIsPlaying(false);
-          }}
-          >
-            Reset
-          </button>
+              setIsPlaying(false);
+            }}
+            >
+              Reset
+            </button>
+          </div>
           <div className="music-controls">
             <input
               type="range"
@@ -235,7 +261,7 @@ export default function App() {
         />
 
         <p className="subtitle">
-          Choose wisely… 😏
+          Bet you can't say no to this… 😏
         </p>
 
         <div className="arena" ref={arenaRef}>
