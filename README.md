@@ -1,16 +1,82 @@
-# React + Vite
+# Will You Be My Valentine?
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A playful interactive web app built with React and Vite to ask one very
+important question:
 
-Currently, two official plugins are available:
+> **Will you be my valentines?**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+------------------------------------------------------------------------
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Interactive Question Card
 
-## Expanding the ESLint configuration
+-   Displays a GIF
+-   Asks the big question
+-   The **"No"** button teleports away when hovered or approached
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### After Clicking "Yes"
+
+-   Background music starts automatically
+-   A photo gallery appears
+-   Image navigation controls unlock
+-   A reset button restarts the experience
+
+### Mobile-Friendly Audio
+
+-   Uses the **Web Audio API**
+-   Implements `AudioContext` + `GainNode`
+-   Volume slider works on mobile (including iOS)
+
+### Fully Responsive
+
+-   Prevents horizontal overflow on mobile
+-   Uses `aspect-ratio` + `object-fit` to prevent layout shifts
+-   Media queries adjust spacing and typography
+-   Optimized for small screens
+
+------------------------------------------------------------------------
+
+## Tech Stack
+
+-   React
+-   Vite
+-   Web Audio API
+-   GitHub Actions
+-   GitHub Pages
+
+------------------------------------------------------------------------
+
+## Deployment
+
+This project automatically deploys to GitHub Pages on every push to
+`main` using GitHub Actions.
+
+Live site:
+
+    https://teviw000.github.io/be-my-valentine/
+
+------------------------------------------------------------------------
+
+## Local Development
+
+Clone the repository:
+
+``` bash
+git clone https://github.com/teviw000/be-my-valentine.git
+cd YOUR_REPO_NAME
+npm install
+npm run dev
+```
+
+Build for production:
+
+``` bash
+npm run build
+```
+
+Preview production build:
+
+``` bash
+npm run preview
+``
