@@ -5,8 +5,9 @@ import img1 from "./assets/gallery/gopro.jpeg";
 import img2 from "./assets/gallery/IMG_0109.jpeg";
 import img3 from "./assets/gallery/IMG_1881.jpeg";
 import img4 from "./assets/gallery/IMG_3026.jpeg";
-import img5 from "./assets/gallery/throwback.jpeg";
-import img6 from "./assets/gallery/IMG_8151.jpeg";
+import img5 from "./assets/gallery/IMG_8151.jpeg";
+import img6 from "./assets/gallery/throwback.jpeg";
+import img7 from "./assets/gallery/love-you-hamster.gif";
 import bgMusic from "./assets/atmosphere.mp3";
 
 function clamp(n, min, max) {
@@ -16,7 +17,7 @@ function clamp(n, min, max) {
 export default function App() {
   const arenaRef = useRef(null);
   const noRef = useRef(null);
-  const galleryImages = [ img1, img2, img3, img4, img5, img6 ];
+  const galleryImages = [ img1, img2, img3, img4, img5, img6 , img7];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const audioRef = useRef(null);
