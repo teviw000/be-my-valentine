@@ -7,7 +7,7 @@ import img3 from "./assets/gallery/IMG_1881.jpeg";
 import img4 from "./assets/gallery/IMG_3026.jpeg";
 import img5 from "./assets/gallery/throwback.jpeg";
 import img6 from "./assets/gallery/IMG_8151.jpeg";
-import bgMusic from "./assets/valentine-song.mp3";
+import bgMusic from "./assets/atmosphere.mp3";
 
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
@@ -52,10 +52,10 @@ export default function App() {
     }
   };
 
-useEffect(() => {
-  const a = audioRef.current;
-  if (a) a.volume = volume;
-}, [volume]);
+  useEffect(() => {
+    const a = audioRef.current;
+    if (a) a.volume = volume;
+  }, [volume]);
 
   // Position & size for the "No" button (absolute within arena)
   const [noBox, setNoBox] = useState({ x: 0, y: 0, w: 120, h: 48 });
@@ -138,7 +138,7 @@ useEffect(() => {
 
       // If mouse approaches within this radius, bail out
       const triggerRadius = 90;
-      if (dist < triggerRadius) moveNo();
+      if (dist < triggerRadius) teleportNo();;
     };
 
     arena.addEventListener("mousemove", onMove);
@@ -148,46 +148,79 @@ useEffect(() => {
 
   return (
     <div className="page">
+      <audio ref={audioRef} src={bgMusic} loop preload="auto" />
       {accepted ? (
-        <div className="card">
+        <div className>
           <div className="gallery">
-            <img
-              src={galleryImages[currentIndex]}
-              className="gallery-image"
-              alt="gallery"
-            />
+            <div className="gallery-frame">
+              <img
+                src={galleryImages[currentIndex]}
+                className="gallery-image"
+                alt="gallery"
+              />
+            </div>
           </div>
           <div className="gallery-controls">
-              <button
-                className="arrow left"
-                onClick={() =>
-                  setCurrentIndex((prev) =>
-                    prev === 0 ? galleryImages.length - 1 : prev - 1
-                  )
-                }
-              >
-                ◀
-              </button>
-              <button
-                className="arrow right"
-                onClick={() =>
-                  setCurrentIndex((prev) =>
-                    prev === galleryImages.length - 1 ? 0 : prev + 1
-                  )
-                }
-              >
-                ▶
-              </button>
+              <div className="love-message">
+                <p>
+                  Hi pookie. I know I don't write often so instead I thought I would do
+                  something a little creative this time. I hope you like it! I love you
+                  so much and I am so grateful to have you in my life. Thank you for choosing me.
+                  Happy Valentine's Day!
+                </p>
+              </div>
+              <div className="arrow-controls">
+                <button
+                  className="arrow left"
+                  onClick={() =>
+                    setCurrentIndex((prev) =>
+                      prev === 0 ? galleryImages.length - 1 : prev - 1
+                    )
+                  }
+                >
+                  ◀
+                </button>
+                <button
+                  className="arrow right"
+                  onClick={() =>
+                    setCurrentIndex((prev) =>
+                      prev === galleryImages.length - 1 ? 0 : prev + 1
+                    )
+                  }
+                >
+                  ▶
+                </button>
+              </div>
             </div>
+          
           <button
             className="reset"
             onClick={() => {
-              setAccepted(false);
-              setCurrentIndex(0);
-            }}
+            setAccepted(false);
+            setCurrentIndex(0);
+
+            const a = audioRef.current;
+            if (a) {
+              a.pause();          // stop playback
+              a.currentTime = 0;  // rewind to beginning
+            }
+
+            setIsPlaying(false);
+          }}
           >
             Reset
           </button>
+          <div className="music-controls">
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={(e) => setVolume(parseFloat(e.target.value))}
+              aria-label="Music volume"
+            />
+        </div>
 </div>
       ) : (
         <div className="card">
@@ -208,7 +241,10 @@ useEffect(() => {
         <div className="arena" ref={arenaRef}>
           <button
             className="btn yes"
-            onClick={() => setAccepted(true)}
+            onClick={() => {
+              startMusic();
+              setAccepted(true);
+            }}
             type="button"
           >
             Yes

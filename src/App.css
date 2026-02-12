@@ -113,18 +113,37 @@ html, body, #root {
   flex-wrap: nowrap;
 }
 
+.gallery-frame {
+  width: min(360px, 85vw);
+  aspect-ratio: 3 / 4;     /* pick what you like: 1/1, 4/3, 3/4, 16/9 */
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 24px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
 .gallery-image {
-  width: clamp(180px, 70vw, 400px); /* min, fluid, max */
-  height: auto;
-  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* fills frame, may crop */
+  object-position: center;  /* keep centered */
+  display: block;
 }
 
 .gallery-controls {
-  display: flex;
+  display: flex-box;
   align-items: center;
   justify-content: center;
   gap: 12px;
   margin-top: 16px;
+  flex-direction: column; 
+}
+
+.arrow-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
 
 .arrow {
@@ -148,4 +167,31 @@ html, body, #root {
 .reset {
   display: flex;
   justify-self: center;
+}
+
+.music-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.love-message {
+  margin: 24px 0 8px;
+  max-width: 500px;
+  text-align: center;
+  font-size: clamp(16px, 2.5vw, 18px);
+  line-height: 1.6;
+  color: #444;
+}
+
+.love-message {
+  animation: fadeIn 1.2s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
