@@ -1,42 +1,97 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center; /* centers vertically + horizontally */
+  background: radial-gradient(circle at top, #ffe3ec, #ffd1dc, #ffc0cb);
+  padding: 24px;
 }
 
 .card {
-  padding: 2em;
+  width: min(560px, 92vw);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(8px);
 }
 
-.read-the-docs {
-  color: #888;
+.title {
+  margin: 0 0 8px;
+  font-size: 32px;
+  line-height: 1.1;
+  display: flex; 
+  justify-content: center;
+}
+
+.subtitle {
+  margin: 0 0 18px;
+  opacity: 0.8;
+}
+
+.arena {
+  position: relative;
+  height: 180px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px dashed rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 18px;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.yes {
+  background: #ff3b7a;
+  color: white;
+  box-shadow: 0 12px 26px rgba(255, 59, 122, 0.35);
+}
+
+.no {
+  position: absolute;
+  background: #2c2c2c;
+  color: white;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+
+  /* NO animation — instant teleport */
+  transition: none;
+}
+
+.reset {
+  margin-top: 16px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.valentine-gif {
+  width: 160px;      /* change this */
+  max-width: 100%;
+  border-radius: 16px;
+  margin: 16px 0;
+  display: block;
+  margin: 16px auto;
+  ;
 }
